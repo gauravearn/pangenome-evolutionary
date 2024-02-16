@@ -6,7 +6,6 @@
 # of the pangenomes from the sequenced genomes given an 
 # proteome fasta files and the nucleotide fasta files
 # it runs on the slurms and can be easily configured to the snakemake or the nextflow
-echo "writing the slurm configurator"
 read -r -p "please provide the batch:" batch
 read -r -p "please provide the queue:" queue
 read -r -p "please provide the number of the cores:" core
@@ -14,23 +13,17 @@ read -r -p "please provide the channel cores:" channel
 read -r -p "please provide the memory allocation:" allocation
 read -r -p "please provide the workdir:" workdir
 read -r -p "please provide the user mail:" mail
-while [[ -z "${batch}" && -z "${queue}"\ 
-        && -z "${core}" && -z "${channel}"\
-        && -z "${allocation}" && -z "${workdir}"\
-                && -z "${mail}"  ]]
-do 
     echo "catching the variables for the slurm"
-/#!/bin/bash -l
-/#SBATCH -J "${batch}"
-/#SBATCH --constraint="snb|hsw"
-/#SBATCH -p "${queue}"
-/#SBATCH -n "${core}"
-/#SBATCH -c "${channel}"
-/#SBATCH --mem="${allocation}"
-/#SBATCH --workdir="${workdir}"
-/#SBATCH --mail-type=END
-/#SBATCH --mail-user="${mail}""
-done 
+echo "#!/bin/bash -l"
+echo "#SBATCH -J "${batch}""
+echo "#SBATCH --constraint="snb"|"hsw""
+echo "#SBATCH -p "${queue}""
+echo "#SBATCH -n "${core}""
+echo "#SBATCH -c "${channel}""
+echo "#SBATCH --mem="${allocation}""
+echo "#SBATCH --workdir="${workdir}""
+echo "#SBATCH --mail-type=END"
+echo "#SBATCH --mail-user="${mail}""
     echo "the slurm configuration is complete"
     echo "this is an automated analysis of the pangenomes sequenced from the arabidopsis genomes"
     echo "this analysis uses either the complete genomes annotations and 
