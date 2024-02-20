@@ -3,8 +3,27 @@ a complete workflow for analyzing the pangenomes from the core genesets. simply 
 
 2024-2-14 An update with fixing up the path vairables add the support for the stream library so that it will be much faster and also adding the construction of the super matrix and running the phylogeny and estimation of the ancestral state on the super matrix. Adding the supporting for the mixed linear modelling of the sequences and also for the supermatrix creation and following the phylogeny runs using the GTRCAT and GTRGAMMA phylogeny models.  
 
-2024-2-19 An update fixing all the variable paths and adding support for the protein based as well as the nuceltodie based phylogenies and pangenomics.
-
+2024-2-20 final release: An update fixing all the variable paths and adding support for the protein based as well as the nuceltodie based phylogenies and pangenomics. Made the code much shorter and within code, added support for the AWK filtering, so that external tools are not required.
+```
+for i in "${dirpath}"/*.faa; do
+            awk '/^>/ {printf("\n%s\n",$0);next; } { printf("%s",$0);}  \
+                                                   END {printf("\n");}' "${i}" >"${i%.*}".protein.fasta
+            rm -rf *.faa
+        done
+        echo "formatting the headers for the super matrix construction"
+        for i in "${nucleotide}"/*.fasta; do
+            awk '/^>/ {printf("\n%s\n",$0);next; } { printf("%s",$0);}  \
+                                                          END {printf("\n");}' "${i}" >"${i%.*}".nucl.fasta
+            rm -rf *.fasta
+        done
+```
+it then loops over the multiple variables at once for the faster iterations. 
+```
+ for i in *.nucl.fasta; do
+            cat ${i%%.*}.format.ids.short.txt | while read line; \
+                    do grep -A 2 $line ${i%%.*}.format.fasta >>${i%%.*}.select.fasta; done
+        done
+```
 Gaurav Sablok, \
 Academic Staff Member, \
 Bioinformatics, \
