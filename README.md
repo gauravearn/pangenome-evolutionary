@@ -22,7 +22,7 @@ it then loops over the multiple variables at once for the faster iterations.
                     do grep -A 2 $line ${i%%.*}.format.fasta >>${i%%.*}.select.fasta; done
         done
 ```
-Gaurav Sablok, \
+Gaurav, \
 Academic Staff Member, \
 Bioinformatics, \
 Institute for Biochemistry and Biology, \
